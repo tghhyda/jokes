@@ -50,11 +50,11 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: [
                         Text(
                           "Handicrafted by",
-                          style: TextStyle(color: Colors.grey, fontSize: 15),
+                          style: TextStyle(color: Colors.grey, fontSize: 10),
                         ),
                         Text(
-                          "Gia Huy",
-                          style: TextStyle(color: Colors.black, fontSize: 15),
+                          "Jim HLS",
+                          style: TextStyle(color: Colors.black, fontSize: 10),
                         )
                       ],
                     ),
@@ -63,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 10,
                   ),
                   Container(
-                    height: 50,
-                    width: 50,
+                    height: 40,
+                    width: 40,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.asset('assets/images/avatar.jpg'),
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
             flex: 3,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              color: Colors.green,
+              color: Color(0xff2ab365),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
@@ -141,12 +141,27 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           Expanded(
               flex: 2,
-              child: Container(
-                  child: Text(
-                "This appis created by Tran Gia Huy as a test to apply for an Internship program in ZenS company,"
-                " Reference UI to Hlsolutions via github",
-                textAlign: TextAlign.center,
-              ))),
+              child: Column(
+                children: [
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        "This appis created as part of Hlsolutions program."
+                        "The material con-tained on this website are provided for general information only and do not constitute any form of advide."
+                        "HLS assumes no responsiblity for the accuracy of any particular statement and accepts no liability for any loss or damage "
+                        "which may arise from reliance on the infor-mation contained on this site.",
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                        textAlign: TextAlign.center,
+                      )),
+                  Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Text(
+                      "Copyright 2021 HLS",
+                      style: TextStyle(fontSize: 14, color: Color(0xff6b6a6a)),
+                    ),
+                  )
+                ],
+              )),
         ],
       ),
     );
@@ -160,37 +175,39 @@ class _MyHomePageState extends State<MyHomePage> {
         isLocked: docJoke['isLocked'],
         isFun: docJoke['isFun']);
 
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          flex: 8,
+          flex: 9,
           child: Text(
-            _jokeNumber <= snapshot.data!.docs.length ? temp.text
-            : "That's all the jokes for today! Come back another day!",
-            style: TextStyle(fontSize: 18),
-            textAlign: TextAlign.center,
+            _jokeNumber <= snapshot.data!.docs.length
+                ? temp.text
+                : "That's all the jokes for today! Come back another day!",
+            style: TextStyle(fontSize: 15, color: Color(0xff5e5d5d)),
+            textAlign: TextAlign.start,
           ),
         ),
         Expanded(
-          flex: 2,
+          flex: 1,
           child: Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(),
                 SizedBox(
-                  width: 150,
+                  width: 140,
+                  height: 300,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder()),
+                        shape: RoundedRectangleBorder(),
+                        backgroundColor: Color(0xff2b7edc)),
                     onPressed: () {
                       final doc = FirebaseFirestore.instance
                           .collection('jokes')
                           .doc(docJoke.id);
 
-                      doc.update({'isFun': true, 'isLocked' : true});
+                      doc.update({'isFun': true, 'isLocked': true});
 
                       if (_jokeNumber < snapshot.data!.docs.length) {
                         _pageController.nextPage(
@@ -204,18 +221,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Text("This is Funny!"),
                   ),
                 ),
+                SizedBox(),
                 SizedBox(
-                  width: 150,
+                  width: 140,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(// <-- Radius
                               ),
-                          backgroundColor: Colors.green),
+                          backgroundColor: Color(0xff2ab365)),
                       onPressed: () {
                         final doc = FirebaseFirestore.instance
                             .collection('jokes')
                             .doc(docJoke.id);
-                        doc.update({'isFun': false, 'isLocked' : true});
+                        doc.update({'isFun': false, 'isLocked': true});
 
                         if (_jokeNumber <= snapshot.data!.docs.length) {
                           _pageController.nextPage(
@@ -227,7 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           _jokeNumber++;
                         });
                       },
-                      child: Text("This is not funny")),
+                      child: Text("This is not funny.")),
                 ),
                 SizedBox()
               ],
